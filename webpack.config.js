@@ -12,6 +12,12 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            compress: {
+               warnings: false
+            }
         })
     ],
     devtool: 'eval-source-map',
