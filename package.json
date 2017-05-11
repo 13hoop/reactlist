@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"🖕🖕🖕 Error: no test specified 🖕🖕🖕\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,10 @@
   },
   "homepage": "https://github.com/13hoop/YRFullReact#readme",
   "dependencies": {
-    "loadash": "0.0.1",
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }

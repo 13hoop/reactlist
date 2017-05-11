@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import $ from 'jquery'
 
 function componment() {
     var elm = document.createElement('div')
@@ -6,3 +7,4 @@ function componment() {
     return elm
 }
 document.body.appendChild(componment())
+$('body').append($('<p style="color: red">this is add by Jquery, and is hot refresh automatic</p>'))
