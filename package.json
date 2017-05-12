@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"🖕🖕🖕 Error: no test specified 🖕🖕🖕\" && exit 1",
-    "build": "webpack -p --display-modules --sort-modules-by size",
+    "build": "webpack --progress --display-modules --sort-modules-by size",
     "start": "webpack-dev-server"
   },
   "repository": {
@@ -23,7 +23,9 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.5.1",
+    "webpack-bundle-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.4.5"
   }
 }
