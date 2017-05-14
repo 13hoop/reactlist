@@ -16,3 +16,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# 移动部分先不同步，不干扰主要任务 
+/ReactDemoMobile

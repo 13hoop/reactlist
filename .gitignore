@@ -64,3 +64,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# 移动部分先不同步，不干扰主要任务 
+/ReactDemoMobile
