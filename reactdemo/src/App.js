@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
+import 'normalize.css'
+import './reset.css'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      newTodo: 'test',
+      newTodo: '',
       todoList: [
         {id: 1, title: '第一个待办'},
         {id: 2, title: '第二个待办'},
@@ -26,13 +28,16 @@ class App extends Component {
       <div className="App">
         <h1>我的待办</h1>
         <div className="inputWrapper">
-          <input type="text" content={this.state.newTodo}/>
+          <TodoInput content={this.state.newTodo} onSubmit={this.addTodo}/>
         </div>
         <ol>
           {todos}
         </ol>
       </div>
-    );
+    )
+  }
+  addTodo() {
+    console.log('here add todo ...')
   }
 }
 

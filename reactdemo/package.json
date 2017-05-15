@@ -5,7 +5,8 @@
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "normalize.css": "^6.0.0"
   },
   "devDependencies": {
     "gh-pages": "^1.0.0",
