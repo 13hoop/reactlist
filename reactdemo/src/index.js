@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
+import Welcome from './Welcome'
+
 function tick() {
   const element = (
     <div>
@@ -17,3 +19,9 @@ function tick() {
 }
 
 setInterval(tick, 1000);
+
+const el = <Welcome name="we need some data in page, is that OK?" />
+ReactDOM.render(
+    el,
+    document.getElementById('comTest')
+)
