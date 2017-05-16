@@ -1,0 +1,30 @@
+.TodoItem {
+    margin-bottom: 2px;
+    padding-right: 5px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.TodoItem > .tagDiv {
+    height: 54px;
+    margin-right:10px; 
+    width: 20px;
+    border: 1px darkblue red;
+}
+
+.TodoItem > .title {
+    flex-grow: 1;
+    padding: 0.5em;
+    margin-right: 1em; 
+    border-bottom:1px slategray solid;
+    font-family: Papyrus;
+}
+
+.TodoItem button {
+    padding: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #4c6ca1, #5f86cf);
+    color: #edeef1;
+    border: 0px;
+}

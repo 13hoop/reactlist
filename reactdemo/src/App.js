@@ -11,38 +11,58 @@ class App extends Component {
     this.state = {
       newTodo: '',
       todoList: [
-        {id: 1, title: '第一个待办'},
-        {id: 2, title: '第二个待办'},
+        { id: 1, title: 'task001' },
+        { id: 2, title: 'sleep whole day' },
       ]
     }
   }
   render() {
-    let todos = this.state.todoList.map((item, index) => {
-      return (
+    let todos = this.state.todoList.filter((item) => !item.deleted).map((item, index) => {
+     return (
         <li key={index}>
-          <TodoItem todo={item}/>
+          <TodoItem todo={item} onToggle={this.toggle.bind(this)} onDelete={this.delete.bind(this)} />
         </li>
       )
     })
-    console.log(todos)
 
     return (
       <div className="App">
-        <h1>我的待办</h1>
+        <h1>Todo-list</h1>
         <div className="inputWrapper">
-          <TodoInput content={this.state.newTodo} onSubmit={this.addTodo.bind(this)}/>
+          <TodoInput content={this.state.newTodo} onBlur={this.focused.bind(this)} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
-        <ol>
+        <ol className="todoList">
           {todos}
         </ol>
       </div>
     )
   }
+  toggle(e, todo, str) {
+    console.log('- 2 -' + todo + 'str ' + str)
+    todo.status = todo.status === 'completed' ? '' : 'completed'
+    this.setState(this.state)
+  }
+
+  delete(event, todo) {
+    todo.deleted = true
+    this.setState(this.state)
+  }
+
+  focused(e) {
+    console.log(' - here - ')
+    console.log(e.type)
+  }
+  changeTitle(event) {
+    this.setState({
+      newTodo: event.target.value,
+      todoList: this.state.todoList
+    })
+  }
   addTodo(event) {
     this.state.todoList.push({
       id: idMaker(),
       title: event.target.value,
-      status: null,
+      status: '',
       deleted: false
     })
     this.setState({
