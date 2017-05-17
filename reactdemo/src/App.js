@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AV from 'leancloud-storage'
 import './App.css';
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
@@ -6,9 +7,19 @@ import * as LocalStore from './LocalStore'
 import 'normalize.css'
 import './reset.css'
 
+
+    var APP_ID = 'dA8GhEixGK1fxzbIePC2LOJa-gzGzoHsz';
+    var APP_KEY = 'yqRfxMoPGOx5rEDRNaUwPd6G';
+    AV.init({
+      appId: APP_ID,
+      appKey: APP_KEY
+    });
+
 class App extends Component {
   constructor(props) {
     super(props)
+
+
     this.state = {
       newTodo: '',
       todoList: LocalStore.load('todoList') || []

@@ -23,8 +23,13 @@
 
 .TodoItem button {
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 2px;
+    border: 0px;
+    /*background: transparent;*/
+    border: 1px solid slategray;
+}
+
+/*.TodoItem button:hover{
     background: linear-gradient(to bottom, #4c6ca1, #5f86cf);
     color: #edeef1;
-    border: 0px;
-}
+}*/
