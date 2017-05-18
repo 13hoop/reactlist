@@ -1,0 +1,104 @@
+.dialog_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    box-shadow: 0 0 1em hsla(0, 0, 0, 0.15);
+    font-family: 'Roboto',sans-serif;
+    background: #a24b61; 
+}
+
+.dialog_wrapper .dialog {
+    background: linear-gradient(to right bottom, #405e6f, #394c61, #243041); 
+    min-width: 400px;
+    height: 500px;
+    padding: 48px 40px 36px;
+    box-sizing: border-box;
+    box-shadow: 0 3rem 6rem -2rem rgba(0,0,0,.87);
+}
+
+.dialog_wrapper .dialog nav {
+    display: flex;
+    align-items: baseline;
+    color: #727374;
+}
+.dialog_wrapper .dialog nav label{
+    padding: 5px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #727374;
+}
+
+.dialog_wrapper .dialog nav label.selected{
+    border-bottom: 2px solid #53c5b9;
+    color: #53c5b9;
+}
+
+.dialog nav label input[type=radio] {
+	display: none;
+}
+
+.dialog_wrapper .dialog .panes {
+    padding: 5px 0em 1em;
+}
+
+/* hidden */
+.dialog_wrapper form.hidden {
+    display: none;
+}
+
+.dialog .panes .cell {
+    margin: 35px 0px 0px 0px;
+}
+
+.dialog .panes form .cell:last-child {
+    margin-top: 120px;
+}
+
+.dialog .panes .cell label {
+    display: block;
+    margin: 5px;
+    color: #acb3bc;
+}
+
+.dialog .panes input[type=text] {
+    background-color: transparent;
+    border-color: #727374;
+    border-width: 0px 0px 1px 0px;
+    margin: 0px 5px;
+    outline: 0px auto transparent;
+    color: #53c5b9;
+    height: 30px;
+    display: block;
+    width: 100%;
+}
+
+.dialog .panes input[type=text]:focus {
+    border-color: transparent;
+    border-bottom: 1px solid #53c5b9;
+    outline: 0px auto transparent;
+    color: #53c5b9;
+}
+
+.dialog .panes input[type=text]::-webkit-input-placeholder {
+    font-size: 10px;
+}
+
+.dialog .panes .action {
+    display: flex;
+    justify-content: flex-end; 
+}
+.dialog .panes .action button {
+    margin: 0px 10px;
+    font-size: 20px;
+    background: transparent;
+    color: #53c5b9;
+    padding: 5px 10px;
+    border-width: 0px;
+    
+}

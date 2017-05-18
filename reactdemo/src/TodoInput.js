@@ -3,13 +3,15 @@ import './TodoInput.css'
 
 export default class TodoInput extends Component {
     render(){
-        return <input type="text" className="TodoInput" onKeyPress={this.submit.bind(this)}/>
+        return <input type="text" className="TodoInput" ref="TodoInput" onKeyPress={this.submit.bind(this)} placeholder="点击添加task"/>
     }
     submit(e) {
         console.log(' ~> ' + e.key)
         if(e.key === 'Enter') {
             this.props.onSubmit(e)
+            this.refs.TodoInput.value = null
         }
+
     }
 }
 

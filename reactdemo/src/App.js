@@ -6,21 +6,14 @@ import TodoItem from './TodoItem'
 import * as LocalStore from './LocalStore'
 import 'normalize.css'
 import './reset.css'
-
-
-    var APP_ID = 'dA8GhEixGK1fxzbIePC2LOJa-gzGzoHsz';
-    var APP_KEY = 'yqRfxMoPGOx5rEDRNaUwPd6G';
-    AV.init({
-      appId: APP_ID,
-      appKey: APP_KEY
-    });
+import UserDialog from './UserDialog'
+import { currentUser } from './LeanCloud'
 
 class App extends Component {
   constructor(props) {
     super(props)
-
-
     this.state = {
+      user: currentUser() || {},
       newTodo: '',
       todoList: LocalStore.load('todoList') || []
     }
@@ -34,17 +27,27 @@ class App extends Component {
       )
     })
 
+    var islogIned = this.state.user.id 
+    // islogIned = 111;
     return (
       <div className="App">
-        <h1>Todo-list</h1>
+        <h1>{this.state.user.name || ''} Todo-list</h1>
         <div className="inputWrapper">
           <TodoInput content={this.state.newTodo} onBlur={this.focused.bind(this)} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
+
+        {islogIned ? null : <UserDialog onSignUp={this.successLoadData.bind(this)} onSignUp={this.successLoadData.bind(this)}/> }
+        
         <ol className="todoList">
           {todos}
         </ol>
       </div>
     )
+  }
+  successLoadData(user) {
+    console.assert('-- 2 ---')
+    this.state.user = user
+    this.setState(this.state)
   }
   toggle(e, todo, str) {
     console.log('- 2 -' + todo + 'str ' + str)
