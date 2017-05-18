@@ -7,10 +7,22 @@ AV.init({
   appKey: APP_KEY
 });
 
+
+
+// 创建对象
+var Task = AV.Object.extend('Task');
+
+var task = new Task()
+task.set('name', 'aaa')
+task.save().then(function (todo) {              console.log('objectId is ' + todo.id);
+}, function (error) {
+  console.error(error);
+});
+
 function parseUserFromAVUser(AVUser) {
   return {
     id: AVUser.id,
-    name: AVUser.userName,
+    ...AVUser.attributes
   }
 }
 
@@ -31,6 +43,7 @@ export function signUpLeanCloud(name, pwd, success, fail) {
 export function signInLeanCloud(name, pwd, success, fail) {
   AV.User.logIn(name, pwd).then(function (loginedUser) {
     let user = parseUserFromAVUser(loginedUser)
+    console.log('parse user: ' + user)
     success.call(null, user)
   }, function (error) {
     fail.call(null, error)
@@ -45,4 +58,9 @@ export function currentUser() {
   }else {
     return undefined
   }
+}
+
+export function signOutLeanCloud() {
+  AV.User.logOut()
+  return undefined;
 }

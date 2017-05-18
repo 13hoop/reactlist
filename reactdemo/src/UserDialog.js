@@ -34,6 +34,7 @@ class UserDialog extends Component {
         let success = (user) => {
             console.log( 'succ ' + user)
             this.props.onSignUp.call(null, user)
+
         }
         let fail = (error) => {
             console.log('error')

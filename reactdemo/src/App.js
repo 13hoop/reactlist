@@ -7,7 +7,7 @@ import * as LocalStore from './LocalStore'
 import 'normalize.css'
 import './reset.css'
 import UserDialog from './UserDialog'
-import { currentUser } from './LeanCloud'
+import { currentUser, signOutLeanCloud } from './LeanCloud'
 
 class App extends Component {
   constructor(props) {
@@ -27,11 +27,12 @@ class App extends Component {
       )
     })
 
-    var islogIned = this.state.user.id 
+    var islogIned = this.state.user.username
     // islogIned = 111;
+    console.log(' user: '+ this.state.user.username)
     return (
       <div className="App">
-        <h1>{this.state.user.name || ''} Todo-list</h1>
+        <h1>{this.state.user.name || ''} Todo-list {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null} </h1>
         <div className="inputWrapper">
           <TodoInput content={this.state.newTodo} onBlur={this.focused.bind(this)} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
@@ -45,10 +46,18 @@ class App extends Component {
     )
   }
   successLoadData(user) {
-    console.assert('-- 2 ---')
-    this.state.user = user
-    this.setState(this.state)
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = user
+    console.log('-- 2 --- ' + stateCopy.user.username)
+    this.setState(stateCopy)
   }
+  signOut(e) {
+    signOutLeanCloud()
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = {}
+    this.setState(stateCopy)
+  }
+
   toggle(e, todo, str) {
     console.log('- 2 -' + todo + 'str ' + str)
     todo.status = todo.status === 'completed' ? '' : 'completed'
@@ -87,7 +96,9 @@ class App extends Component {
     // LocalStore.save('todoList', this.state.todoList)
   }
   componentDidUpdate() {
-     LocalStore.save('todoList', this.state.todoList)
+    // 本地保存
+    //  LocalStore.save('todoList', this.state.todoList)
+    // 更新到leanCloud
   }
 }
 
