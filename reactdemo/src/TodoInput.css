@@ -1,7 +1,31 @@
 .TodoInput {
     width: 100%;
-    line-height: 1.8;
-    margin-bottom: 1em;
+    /*line-height: 1.8;*/
+    margin-bottom: 10px;
     font-size: 16px;
     padding: 0.2em;
+}
+
+input.TodoInput[type=text] {
+    background-color: transparent;
+    border-color: wheat;
+    border-width: 0px 0px 2px 0px;
+    /*margin: 0px 5px;*/
+    outline: 0px auto transparent;
+    color: wheat;
+    height: 30px;
+    display: block;
+}
+
+input.TodoInput[type=text]:focus {
+    border-color: transparent;
+    border-bottom: 1px solid #53c5b9;
+    outline: 0px auto transparent;
+    color: #53c5b9;
+}
+
+input.TodoInput[type=text]::-webkit-input-placeholder {
+    font-size: 10px;
+    font-family: Papyrus;
+    text-align: center;
 }

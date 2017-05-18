@@ -18,7 +18,7 @@ export default class TodoItem extends Component {
         if (this.state.hover) {
             linkStyle = {backgroundColor: ccc, color: 'white'}
         } else {
-            linkStyle = {backgroundColor: 'transparent'}
+            linkStyle = {backgroundColor: '#56a7af'}
         } 
         return (
             <div className="TodoItem">

@@ -10,14 +10,33 @@
 }
 
 .App h1 {
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   text-align: center;
   color:#509399;
   text-shadow: 4px 5px 2px #000;
-  font-family: Rockwell Extra Bold;
+  /*font-family: Rockwell Extra Bold;*/
+  font-family: Zapfino;
+}
+
+.App h1 button {
+  background: transparent;
+  font-family:PMingLiU;
+  font-size: 20px;
+  border-width: 0px;
+  color: wheat;
 }
 
 .App ol {
   margin-bottom: 40px;
+}
+
+.App ol > li {
+  overflow: hidden;
+  border-radius: 0px 27px 27px 0px;
+  margin-bottom: 2px;
 }
 .App > .todoList > li:nth-child(odd) {
   background:#f9f9f9;

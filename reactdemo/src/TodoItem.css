@@ -1,9 +1,9 @@
 .TodoItem {
-    margin-bottom: 2px;
-    padding-right: 5px;
     display: flex;
     justify-content:space-between;
     align-items: center;
+    /*border-top-right-radius: 50%; */
+    border-radius: 50%;
 }
 
 .TodoItem > .tagDiv {
@@ -22,11 +22,13 @@
 }
 
 .TodoItem button {
-    padding: 10px;
+    padding: 0px 10px 0px 10px;
     border-radius: 2px;
     border: 0px;
-    /*background: transparent;*/
-    border: 1px solid slategray;
+    color: wheat;
+    height: 54px;
+    border-left: 1px solid #53c5b9;
+    font-family: hannotate SC;
 }
 
 /*.TodoItem button:hover{

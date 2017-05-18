@@ -32,7 +32,7 @@ class App extends Component {
     console.log(' user: '+ this.state.user.username)
     return (
       <div className="App">
-        <h1>{this.state.user.name || ''} Todo-list {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null} </h1>
+        <h1>{this.state.user.username + "'s" || ''} Todo-list {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null} </h1>
         <div className="inputWrapper">
           <TodoInput content={this.state.newTodo} onBlur={this.focused.bind(this)} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
