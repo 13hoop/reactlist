@@ -1,6 +1,6 @@
 {
   "name": "reactdemo",
-  "homepage": "http://13hoop.github.io/YRFullReact/reactdemo/build",
+  "homepage": "http://13hoop.github.io/reactlist/reactdemo/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
