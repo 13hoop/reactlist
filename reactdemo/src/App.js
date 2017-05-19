@@ -101,7 +101,7 @@ class App extends Component {
     // 本地保存
     //  LocalStore.save('todoList', this.state.todoList)
     // 更新到leanCloud
-    saveTodoTask(this.state.todoList)
+    saveTodoTask(this.parseJson  (this.state.todoList))
   }
   parseJson(data) {
     return JSON.parse(JSON.stringify(data))
