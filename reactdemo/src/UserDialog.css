@@ -10,7 +10,7 @@
     align-items: center;
     box-shadow: 0 0 1em hsla(0, 0, 0, 0.15);
     font-family: 'Roboto',sans-serif;
-    background: #a24b61; 
+    /*background: #a24b61; */
 }
 
 .dialog_wrapper .dialog {

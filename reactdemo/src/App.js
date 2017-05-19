@@ -7,7 +7,7 @@ import * as LocalStore from './LocalStore'
 import 'normalize.css'
 import './reset.css'
 import UserDialog from './UserDialog'
-import { currentUser, signOutLeanCloud } from './LeanCloud'
+import { currentUser, signOutLeanCloud, saveTodoTask } from './LeanCloud'
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       user: currentUser() || {},
       newTodo: '',
+      // todoList: LocalStore.load('todoList') || []
       todoList: LocalStore.load('todoList') || []
     }
   }
@@ -37,7 +38,7 @@ class App extends Component {
           <TodoInput content={this.state.newTodo} onBlur={this.focused.bind(this)} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
 
-        {islogIned ? null : <UserDialog onSignUp={this.successLoadData.bind(this)} onSignUp={this.successLoadData.bind(this)}/> }
+        {islogIned ? null : <UserDialog onSignUp={this.logInOrSignUp.bind(this)} onSignUp={this.logInOrSignUp.bind(this)}/> }
         
         <ol className="todoList">
           {todos}
@@ -45,15 +46,15 @@ class App extends Component {
       </div>
     )
   }
-  successLoadData(user) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
+  logInOrSignUp(user) {
+    let stateCopy = this.parseJson(this.state)
     stateCopy.user = user
     console.log('-- 2 --- ' + stateCopy.user.username)
     this.setState(stateCopy)
   }
   signOut(e) {
     signOutLeanCloud()
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    let stateCopy = this.parseJson(this.state)
     stateCopy.user = {}
     this.setState(stateCopy)
   }
@@ -84,7 +85,7 @@ class App extends Component {
   }
   addTodo(event) {
     this.state.todoList.push({
-      id: idMaker(),
+      id: 'new',
       title: event.target.value,
       status: '',
       deleted: false
@@ -94,11 +95,16 @@ class App extends Component {
       todoList: this.state.todoList
     })
     // LocalStore.save('todoList', this.state.todoList)
+    // saveTodoTask()
   }
   componentDidUpdate() {
     // 本地保存
     //  LocalStore.save('todoList', this.state.todoList)
     // 更新到leanCloud
+    saveTodoTask(this.state.todoList)
+  }
+  parseJson(data) {
+    return JSON.parse(JSON.stringify(data))
   }
 }
 

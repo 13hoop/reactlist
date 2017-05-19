@@ -7,19 +7,11 @@ AV.init({
   appKey: APP_KEY
 });
 
-
-
-// 创建对象
-var Task = AV.Object.extend('Task');
-
-var task = new Task()
-task.set('name', 'aaa')
-task.save().then(function (todo) {              console.log('objectId is ' + todo.id);
-}, function (error) {
-  console.error(error);
-});
-
 function parseUserFromAVUser(AVUser) {
+  // --- debug ---
+  // var userStr = JSON.stringify(AVUser)
+  // var jsonObj = JSON.parse(userStr)
+  // console.log(' user_str : ' + userStr + '\n obj: ' + jsonObj.objectId)
   return {
     id: AVUser.id,
     ...AVUser.attributes
@@ -37,7 +29,7 @@ export function signUpLeanCloud(name, pwd, success, fail) {
   }, function(error) {
     fail.call(null, error)
   })
-  return undefined // have to return
+  return undefined 
 }
 
 export function signInLeanCloud(name, pwd, success, fail) {
@@ -48,7 +40,7 @@ export function signInLeanCloud(name, pwd, success, fail) {
   }, function (error) {
     fail.call(null, error)
   });
-  return undefined // have to return
+  return undefined 
 }
 
 export function currentUser() {
@@ -63,4 +55,29 @@ export function currentUser() {
 export function signOutLeanCloud() {
   AV.User.logOut()
   return undefined;
+}
+
+export function saveTodoTask(data) {
+  var TaskObj = AV.Object('Task')
+  TaskObj.set('info', 'tttt')
+
+  // 
+  data.map((item, index) => {
+    
+    console.log(index + ' : ' + JSON.stringify(item))
+    // // 第一个参数是 className，第二个参数是 objectId
+    // var todo = AV.Object.createWithoutData('Todo', '5745557f71cfe40068c6abe0');
+    // // 修改属性
+    // todo.set('content', '每周工程师会议，本周改为周三下午3点半。');
+  })
+  var userObjID = currentUser().id
+  // console.log(' |||~> ' + currentUser().id + '\n       ' + JSON.stringify(data))
+  // TaskObj.set('dependent', userObjID)
+  // TaskObj.save().then(function (data) {
+  //   console.log('synTask : ' + data)
+  // }, function(error) {
+  //   console.log('error: ' + error)
+  //   alert(error)
+  // })
+  return undefined
 }
