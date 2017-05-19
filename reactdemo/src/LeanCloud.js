@@ -78,7 +78,7 @@ export function saveTodoTask(data) {
 
     if (item.id === 'new') {
       // 无ID - 创建对象
-      var Todo = AV.Object.extend('Todo');
+      var Todo = AV.Object('Todo')
       Todo.set('dependent', userObjID)
       Todo.set('title', item.title)
       Todo.set('status', item.status)
