@@ -63,10 +63,11 @@ export function saveTodoTask(data) {
 
   // 
   data.map((item, index) => {
-    
-    console.log(index + ' : ' + JSON.stringify(item))
-    // // 第一个参数是 className，第二个参数是 objectId
-    // var todo = AV.Object.createWithoutData('Todo', '5745557f71cfe40068c6abe0');
+
+    console.log( item)
+
+    // 第一个参数是 className，第二个参数是 objectId
+    // var todo = AV.Object.createWithoutData('Task', );
     // // 修改属性
     // todo.set('content', '每周工程师会议，本周改为周三下午3点半。');
   })
