@@ -66,6 +66,18 @@ export function signOutLeanCloud() {
   deleted:
  }
 */ 
+function creatOrUpdateTask (taskData, dependentId, targerObj) {
+      targerObj.set('dependent', dependentId)
+      targerObj.set('title', taskData.title)
+      targerObj.set('status', taskData.status)
+      targerObj.set('deleted', taskData.deleted)
+      targerObj.save().then(function (data) {
+        console.log('synTask : ' + data)
+      }, function (error) {
+        console.log('error: ' + error)
+        alert(error)
+      })
+}
 
 export function saveTodoTask(data) {
   var TaskObj = AV.Object('Task')
@@ -79,29 +91,11 @@ export function saveTodoTask(data) {
     if (item.id === 'new') {
       // 无ID - 创建对象
       var Todo = AV.Object('Todo')
-      Todo.set('dependent', userObjID)
-      Todo.set('title', item.title)
-      Todo.set('status', item.status)
-      Todo.set('deleted', item.deleted)
-      Todo.save().then(function (data) {
-        console.log('synTask : ' + data)
-      }, function (error) {
-        console.log('error: ' + error)
-        alert(error)
-      })
+      creatOrUpdateTask(item, userObjID, Todo)
     } else {
       // 有ID - 对原对象更新
       var todo = AV.Object.createWithoutData('Task', item.id)
-      todo.set('dependent', userObjID)
-      todo.set('title', item.title)
-      todo.set('status', item.status)
-      todo.set('deleted', item.deleted)
-      todo.save().then(function (data) {
-        console.log('synTask : ' + data)
-      }, function (error) {
-        console.log('error: ' + error)
-        alert(error)
-      })
+      creatOrUpdateTask(item, userObjID, todo)
     }
   })
   return undefined
