@@ -7,3 +7,14 @@
     "emailVerified": false,
     "mobilePhoneVerified": false
 }
+// ---- loacalStorage
+{
+    "username": "aaa",
+    "emailVerified": false,
+    "mobilePhoneVerified": false,
+    "objectId": "591c4899da2f60005d14d16a",
+    "createdAt": "2017-05-17T12:56:57.409Z",
+    "updatedAt": "2017-05-17T12:56:57.409Z",
+    "_id": "591c4899da2f60005d14d16a",
+    "_sessionToken": "pdkyyxi7xrwgat090gje1afjz"
+}

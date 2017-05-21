@@ -81,13 +81,11 @@ function creatOrUpdateTask (taskData, dependentId, targerObj) {
 
 export function saveTodoTask(data) {
   var TaskObj = AV.Object('Task')
-  TaskObj.set('info', 'tttt')
-
+  // TaskObj.set('info', 'test')
   var userObjID = currentUser().id
   data.map((item, index) => {
 
-    console.log(index + ' : ' + JSON.stringify(item) + ' - ' + item.id)
-
+    // console.log(index + ' : ' + JSON.stringify(item) + ' - ' + item.id)
     if (item.id === 'new') {
       // 无ID - 创建对象
       var Todo = AV.Object('Todo')
@@ -99,4 +97,19 @@ export function saveTodoTask(data) {
     }
   })
   return undefined
+}
+
+export function loadTodoData(success) {
+  var query = new AV.Query('Todo')
+  var userObjID = currentUser().id
+  query.equalTo('dependent', userObjID)
+  query.find().then(function (tasks) {
+      // 查询到商品后，在前端展示到相应的位置中
+      //  tasks.map((item, index) => {
+      //    console.log(index + ' : ' + JSON.stringify(item) + ' - ' + item.title)
+      //  })
+       success(tasks)
+  }).catch(function(error) {
+    alert(JSON.stringify(error));
+  });
 }
