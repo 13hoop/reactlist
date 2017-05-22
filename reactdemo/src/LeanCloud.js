@@ -20,8 +20,8 @@ export function signUpLeanCloud(name, pwd, success, fail) {
   user.signUp().then(function (existedUser) {
     let user = parseUserFromAVUser(existedUser)
     success.call(null, user)
-  }, function (error) {
-    fail.call(null, error)
+  }, function (errorInfo) {
+    showErrorInfo(errorInfo)
   })
   return undefined
 }
@@ -31,8 +31,8 @@ export function signInLeanCloud(name, pwd, success, fail) {
     let user = parseUserFromAVUser(loginedUser)
     console.log('parse user: ' + JSON.stringify(user))
     success.call(null, user)
-  }, function (error) {
-    fail.call(null, error)
+  }, function (errorInfo) {
+    showErrorInfo(errorInfo)
   })
   return undefined
 }
@@ -89,11 +89,28 @@ function showErrorInfo(errorInfo) {
     case 124:
       alert('请求超时')
       break
+
+// 登陆注册相关
+    case 201:
+      alert('没有提供密码，或者密码为空')
+      break
     case 202:
       alert('用户名已被占用')
       break
+    case 203:
+      alert('电子邮箱地址已经被占用')
+      break
+    case 204:
+      alert('没有提供电子邮箱地址')
+      break
+    case 210:
+      alert('用户名和密码不匹配')
+      break
+    case 211:
+      alert('找不到用户')
+      break
     default:
-      alert(' -> ' + errorInfo.error)
+      alert('❌' + errorInfo.error)
       break
   }
 }
@@ -111,13 +128,10 @@ export function saveTodoTaskLeanCloud(data, success) {
 export function updateTodoLeanCloud(data, success) {
   let user = currentUser()
   var userObjID = user.objectId
-  console.log(` --- updateTask ---> ${userObjID}`)
-  data.map((item, index) => {
-      console.log('old : ' + JSON.stringify(item))
-      // 有ID - 对原对象更新
-      var todo = AV.Object.createWithoutData('Task', item.objectId)
-      creatOrUpdateTask(item, userObjID, todo, success)
-  })
+  console.log(` --- updateTask ---> ${data}`)
+  // 有ID - 对原对象更新
+  var todo = AV.Object.createWithoutData('Task', data.objectId)
+  creatOrUpdateTask(data, userObjID, todo, success)
   return undefined
 }
 

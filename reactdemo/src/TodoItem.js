@@ -23,7 +23,7 @@ export default class TodoItem extends Component {
         return (
             <div className="TodoItem">
                 <div className="tagDiv" style={{backgroundColor: ccc}}></div>
-                <input type="checkbox" checked={this.props.todo.status === 'completed'} onChange={this.toggle.bind(this)}/>
+                <input type="checkbox" checked={this.props.todo.status === '1'} onChange={this.toggle.bind(this)}/>
                 <span className="title">{this.props.todo.title}</span>
                 <button style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onClick={this.delete.bind(this)}>删除</button>
             </div>
