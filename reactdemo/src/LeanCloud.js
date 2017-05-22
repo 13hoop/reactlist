@@ -7,15 +7,9 @@ AV.init({
   appKey: APP_KEY
 });
 
-function parseUserFromAVUser(AVUser) {
-  // --- debug ---
-  // var userStr = JSON.stringify(AVUser)
-  // var jsonObj = JSON.parse(userStr)
-  // console.log(' user_str : ' + userStr + '\n obj: ' + jsonObj.objectId)
-  return {
-    id: AVUser.id,
-    ...AVUser.attributes
-  }
+
+function parseUserFromAVUser(data) {
+  return JSON.parse(JSON.stringify(data))
 }
 
 export default AV
@@ -35,17 +29,19 @@ export function signUpLeanCloud(name, pwd, success, fail) {
 export function signInLeanCloud(name, pwd, success, fail) {
   AV.User.logIn(name, pwd).then(function (loginedUser) {
     let user = parseUserFromAVUser(loginedUser)
-    console.log('parse user: ' + user)
+    console.log('parse user: ' + JSON.stringify(user))
     success.call(null, user)
   }, function (error) {
     fail.call(null, error)
-  });
+  })
   return undefined
 }
 
 export function currentUser() {
   let user = AV.User.current()
   if (user) {
+    // let r = parseUserFromAVUser(user)
+    // console.log( '-- user --: ' + r['objectId'])
     return parseUserFromAVUser(user)
   } else {
     return undefined
@@ -60,56 +56,80 @@ export function signOutLeanCloud() {
 /*
  -model-
  {
-  id: 
+  id:  
   title: 
-  status: 
-  deleted:
+  status:  '0' ~> 正在进行; '1' ~> 已完成，归档;
+  deleted: '0' ~> 未删除； '1' ~> 删除；
  }
-*/ 
-function creatOrUpdateTask (taskData, dependentId, targerObj) {
-      targerObj.set('dependent', dependentId)
-      targerObj.set('title', taskData.title)
-      targerObj.set('status', taskData.status)
-      targerObj.set('deleted', taskData.deleted)
-      targerObj.save().then(function (data) {
-        console.log('synTask : ' + data)
-      }, function (error) {
-        console.log('error: ' + error)
-        alert(error)
-      })
+*/
+function creatOrUpdateTask(taskData, dependentId, targerObj, success) {
+  targerObj.set('dependent', dependentId)
+  targerObj.set('title', taskData.title)
+  targerObj.set('status', taskData.status)
+  targerObj.set('deleted', taskData.deleted)
+  targerObj.set('testID', taskData.id)
+  targerObj.save().then(function (data) {
+    // console.log('synTask : ' + data)
+    success(data)
+    console.log(' -- doooooonnnneee ---')
+  }, function (errorInfo) {
+    showErrorInfo(errorInfo)
+  })
 }
 
-export function saveTodoTask(data) {
-  var TaskObj = AV.Object('Task')
-  // TaskObj.set('info', 'test')
-  var userObjID = currentUser().id
-  data.map((item, index) => {
+function showErrorInfo(errorInfo) {
+  console.log('error: ' + errorInfo.error)
+  switch (errorInfo.code) {
+    case 101:
+      alert('查询的 Class 不存在，或者要关联的 Pointer 对象不存在,亲反馈给开发者')
+      break
+    case 103:
+      alert('非法的 Class 名称')
+      break
+    case 124:
+      alert('请求超时')
+      break
+    case 202:
+      alert('用户名已被占用')
+      break
+    default:
+      alert(' -> ' + errorInfo.error)
+      break
+  }
+}
 
-    // console.log(index + ' : ' + JSON.stringify(item) + ' - ' + item.id)
-    if (item.id === 'new') {
-      // 无ID - 创建对象
-      var Todo = AV.Object('Todo')
-      creatOrUpdateTask(item, userObjID, Todo)
-    } else {
+
+export function saveTodoTaskLeanCloud(data, success) {
+  let user = currentUser()
+  var userObjID = user.objectId
+  console.log(` --- saveTodoTask ---> ${JSON.stringify(data)}`)
+  var todo = AV.Object('Task')
+  creatOrUpdateTask(data, userObjID, todo, success)
+  return undefined
+}
+
+export function updateTodoLeanCloud(data, success) {
+  let user = currentUser()
+  var userObjID = user.objectId
+  console.log(` --- updateTask ---> ${userObjID}`)
+  data.map((item, index) => {
+      console.log('old : ' + JSON.stringify(item))
       // 有ID - 对原对象更新
-      var todo = AV.Object.createWithoutData('Task', item.id)
-      creatOrUpdateTask(item, userObjID, todo)
-    }
+      var todo = AV.Object.createWithoutData('Task', item.objectId)
+      creatOrUpdateTask(item, userObjID, todo, success)
   })
   return undefined
 }
 
 export function loadTodoData(success) {
-  var query = new AV.Query('Todo')
-  var userObjID = currentUser().id
+  var query = new AV.Query('Task')
+  let user = currentUser()
+  var userObjID = user.objectId
+  // console.log(' --- loadTodoData ---> ' + userObjID)
   query.equalTo('dependent', userObjID)
   query.find().then(function (tasks) {
-      // 查询到商品后，在前端展示到相应的位置中
-      //  tasks.map((item, index) => {
-      //    console.log(index + ' : ' + JSON.stringify(item) + ' - ' + item.title)
-      //  })
-       success(tasks)
-  }).catch(function(error) {
+    success(tasks)
+  }).catch(function (error) {
     alert(JSON.stringify(error));
   });
 }
