@@ -39,7 +39,7 @@ class App extends Component {
           <TodoInput content={this.state.putWords} onSubmit={this.addTodo.bind(this)} onChange={this.changeTitle.bind(this)} />
         </div>
 
-        {islogIned ? null : <UserDialog onSignUp={this.logInOrSignUp.bind(this)} onSignUp={this.logInOrSignUp.bind(this)} />}
+        {islogIned ? null : <UserDialog onAction={this.logInOrSignUp.bind(this)} />}
 
         <ol className="todoList">
           {todos}

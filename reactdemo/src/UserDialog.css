@@ -57,7 +57,7 @@
 }
 
 .dialog .panes form .cell:last-child {
-    margin-top: 120px;
+    margin-top: 100px;
 }
 
 .dialog .panes .cell label {
@@ -100,5 +100,19 @@
     color: #53c5b9;
     padding: 5px 10px;
     border-width: 0px;
-    
+}
+
+.dialog .panes form .signIn div {
+    text-align: right;
+}
+
+.dialog .panes form .signIn .forgetBtn {
+    background: transparent;
+    color: #dac296;
+    border-width: 0px;
+    border-radius: 3px;
+    font-size: 11px;
+    align-items: flex-end;
+    padding: 5px 8px;
+    margin-top: 5px; 
 }
