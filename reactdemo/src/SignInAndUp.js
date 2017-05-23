@@ -8,27 +8,51 @@ class SignInAndUp extends Component {
         this.state = {
             selected: "signIn",
             formData: {
+                email: '',
                 name: '',
                 pwd: ''
-            },
+            }
+        }
+    }
+    validFormData(formInfo) {
+        let validateEmail = function(email) {
+            let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return re.test(email)
+        }
+    
+        let {email, name, pwd } = formInfo
+        if(!validateEmail(email)) {
+            alert('请输入正确的邮箱地址')
+            return
+        }
+        if(name.length < 3) {
+            alert('注册名至少3个字符')
+            return
+        }
+        if(pwd.length < 6) {
+            alert('密码不少于6位')
+            return
         }
     }
     signUp(e) {
         e.preventDefault()
-        let { name, pwd } = this.state.formData
+        this.validFormData(this.state.formData)
+        let {email, name, pwd } = this.state.formData
         let success = (user) => {
             console.log('succ ' + user)
             this.props.onSignUp.call(null, user)
         }
         let fail = (error) => {
             console.log('error')
-            alert(error)
         }
-        signUpLeanCloud(name, pwd, success, fail)
+        if(email.length > 5 && name.length >= 3 && pwd.length >= 6) {
+            signUpLeanCloud(email, name, pwd, success, fail)
+        }
     }
     signIn(e) {
         e.preventDefault()
-        let { name, pwd } = this.state.formData
+        let name = this.state.formData.name
+        let pwd = this.state.formData.pwd
         let success = (user) => {
             console.log('succ ' + user)
             this.props.onSignIn.call(null, user)
@@ -37,10 +61,14 @@ class SignInAndUp extends Component {
             console.log('error')
             alert(error)
         }
-        signInLeanCloud(name, pwd, success, fail)
+        if(name.length >= 3 && pwd.length >= 6) {
+            signInLeanCloud(name, pwd, success, fail)
+        }else {
+            alert('用户名和密码的格式不对，请检查后重新操作')
+        }
     }
     changeFormData(key, e) {
-        console.log('changed: ' + e.target.value + key)
+        console.log(' ~ ' + e.target.value + key)
         let stateCopy = JSON.parse(JSON.stringify(this.state))
         stateCopy.formData[key] = e.target.value
         this.setState(stateCopy)
@@ -63,6 +91,10 @@ class SignInAndUp extends Component {
                     </nav>
                     <div className="panes">
                         <form className={this.state.selected === "signUp" ? '' : 'hidden'} onSubmit={this.signUp.bind(this)}>
+                            <div className='cell emailCell'>
+                                <label>邮箱地址</label>
+                                <input type="text" value={this.state.formData.email} onChange={this.changeFormData.bind(this, 'email')} placeholder="输入正确的邮箱地址" />
+                            </div>
                             <div className='cell'>
                                 <label>注册名</label>
                                 <input type="text" value={this.state.formData.name} onChange={this.changeFormData.bind(this, 'name')} placeholder="输入注册名" />
@@ -98,6 +130,7 @@ class SignInAndUp extends Component {
         this.setState({
             selected: e.target.value,
             formData: {
+                email: '',
                 name: '',
                 pwd: ''
             }

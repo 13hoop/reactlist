@@ -4,13 +4,6 @@ import SignInAndUp from './SignInAndUp'
 class UserDialog extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            selected: "signIn",
-            formData: {
-                name: '',
-                pwd: ''
-            },
-        }
     }
     signUp(e, user) {
         console.log(' -- sign Up -- UD')

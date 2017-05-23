@@ -56,8 +56,12 @@
     margin: 35px 0px 0px 0px;
 }
 
+.dialog .panes .emailCell {
+    margin-top: 20px;
+}
+
 .dialog .panes form .cell:last-child {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .dialog .panes .cell label {

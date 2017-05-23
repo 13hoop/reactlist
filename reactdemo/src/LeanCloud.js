@@ -13,8 +13,11 @@ function parseUserFromAVUser(data) {
 }
 
 export default AV
-export function signUpLeanCloud(name, pwd, success, fail) {
+export function signUpLeanCloud(email, name, pwd, success, fail) {
   var user = new AV.User()
+  if(email) {
+    user.setEmail('tom@leancloud.cn');
+  }
   user.setUsername(name)
   user.setPassword(pwd)
   user.signUp().then(function (existedUser) {
