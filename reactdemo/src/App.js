@@ -6,12 +6,11 @@ import TodoItem from './TodoItem'
 import 'normalize.css'
 import './reset.css'
 import UserDialog from './UserDialog'
-import { currentUser, signOutLeanCloud, loadTodoData, saveTodoTaskLeanCloud, updateTodoLeanCloud, deletedTodoLeanCloud } from './LeanCloud'
+import { currentUser, signOutLeanCloud, loadTodoData, saveTodoTaskLeanCloud, updateTodoLeanCloud } from './LeanCloud'
 
 class App extends Component {
   constructor(props) {
     super(props)
-    // console.log(' - lc: ' + 'constructor')
     this.state = {
       user: currentUser() || {},
       putWords: '',
@@ -76,7 +75,7 @@ class App extends Component {
   delete(todo) {
     todo.deleted = '1'
     console.log(' ddd ' + JSON.stringify(todo))
-    deletedTodoLeanCloud(todo, (objId) => {
+    updateTodoLeanCloud(todo, (objId) => {
       console.log('-- 5 : backDeletTodo = ' + JSON.stringify(objId))
       this.setState(this.state)
     })

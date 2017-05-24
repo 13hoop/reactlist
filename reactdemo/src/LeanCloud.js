@@ -126,23 +126,21 @@ export function updateTodoLeanCloud(data, success) {
   let user = currentUser()
   let userObjID = user.objectId
   console.log(` -- 2 - update Task ---> ${data.id}`)
+  console.log(`        or          ---> ${JSON.parse(JSON.stringify(data)).objectId}` )
 
-  let todo = AV.Object.createWithoutData('Task', data.id)
-  creatOrUpdateTask(data, userObjID, todo, success)
-  return undefined
-}
+  let idData = ''
+  if(typeof data.id == 'undefined' ) {
+    idData = JSON.parse(JSON.stringify(data)).objectId
+  }else {
+    idData = data.id
+  }
 
-export function deletedTodoLeanCloud(data, success) {
-  let user = currentUser()
-  let userObjID = user.objectId
-
-  console.log(` -- 2 - delete ---> ${data.id}`)
-  if(!data.id) {
+  if(!idData) {
     alert('操作失败，请重试')
     return 
   }
 
-  let todo = AV.Object.createWithoutData('Task', data.id)
+  let todo = AV.Object.createWithoutData('Task', idData)
   creatOrUpdateTask(data, userObjID, todo, success)
   return undefined
 }
