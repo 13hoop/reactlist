@@ -12,8 +12,9 @@ function parseUserFromAVUser(data) {
 }
 
 export default AV
+
 export function signUpLeanCloud(email, name, pwd, success, fail) {
-  var user = new AV.User()
+  let user = new AV.User()
   if (email) {
     user.setEmail(email)
   }
@@ -42,8 +43,6 @@ export function signInLeanCloud(name, pwd, success, fail) {
 export function currentUser() {
   let user = AV.User.current()
   if (user) {
-    // let r = parseUserFromAVUser(user)
-    // console.log( '-- user --: ' + r['objectId'])
     return parseUserFromAVUser(user)
   } else {
     return undefined
@@ -92,7 +91,6 @@ function showErrorInfo(errorInfo) {
       break
   }
 }
-
 /*
  -model-
  {
@@ -119,7 +117,7 @@ function creatOrUpdateTask(taskData, dependentId, targerObj, success) {
 }
 export function saveTodoTaskLeanCloud(data, success, fall ){
   let user = currentUser()
-  var userObjID = user.objectId
+  let userObjID = user.objectId
   let Task = AV.Object.extend('Task') 
   let todo = new Task()
   creatOrUpdateTask(data, userObjID, todo, success)
@@ -127,18 +125,28 @@ export function saveTodoTaskLeanCloud(data, success, fall ){
 
 export function updateTodoLeanCloud(data, success) {
   let user = currentUser()
-  var userObjID = user.objectId
-  console.log(` -- 2 - update Task ---> ${JSON.stringify(data.id)}`)
-  // 有ID - 对原对象更新
-  var todo = AV.Object.createWithoutData('Task', data.id)
+  let userObjID = user.objectId
+  console.log(` -- 2 - update Task ---> ${data.id}`)
+
+  let todo = AV.Object.createWithoutData('Task', data.id)
+  creatOrUpdateTask(data, userObjID, todo, success)
+  return undefined
+}
+
+export function deletedTodoLeanCloud(data, success) {
+  let user = currentUser()
+  let userObjID = user.objectId
+  console.log(` -- 2 - delete ---> ${data.id}`)
+
+  let todo = AV.Object.createWithoutData('Task', data.id)
   creatOrUpdateTask(data, userObjID, todo, success)
   return undefined
 }
 
 export function loadTodoData(success) {
-  var query = new AV.Query('Task')
+  let query = new AV.Query('Task')
   let user = currentUser()
-  var userObjID = user.objectId
+  let userObjID = user.objectId
   console.log(' --- loadTodoData ---> ' + userObjID)
   query.equalTo('dependent', userObjID)
   query.find().then(function (tasks) {

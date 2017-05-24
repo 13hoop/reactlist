@@ -6,7 +6,7 @@ import TodoItem from './TodoItem'
 import 'normalize.css'
 import './reset.css'
 import UserDialog from './UserDialog'
-import { currentUser, signOutLeanCloud, loadTodoData, saveTodoTaskLeanCloud, updateTodoLeanCloud } from './LeanCloud'
+import { currentUser, signOutLeanCloud, loadTodoData, saveTodoTaskLeanCloud, updateTodoLeanCloud, deletedTodoLeanCloud } from './LeanCloud'
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class App extends Component {
     }
   }
   render() {
-    // console.log(' - lc: ' + 'render')
+    console.log(' - lc: ' + 'render ~ ' + JSON.stringify(this.state.todoList))
     let todos = this.state.todoList.filter((item) => item.deleted === '0').map((item, index) => {
       return (
         <li key={index}>
@@ -32,7 +32,7 @@ class App extends Component {
       )
     })
 
-    var islogIned = this.state.user.username
+    let islogIned = this.state.user.username
     // console.log(' user: ' + this.state.user.username)
     return (
       <div className="App">
@@ -65,18 +65,20 @@ class App extends Component {
   }
 
   toggle(todo, e) {
+    console.log(' ttt ' + JSON.stringify(todo))
+    let oldStatus = todo.status
     todo.status = todo.status === '1' ? '0' : '1'
-    console.log(' -- 1')
+    console.log(' >> ttt ' + JSON.stringify(todo))
     updateTodoLeanCloud(todo, (objId) => {
-      console.log('update data, refresh page')
       this.setState(this.state)
     })
   }
 
   delete(todo) {
     todo.deleted = '1'
-    this.setState(this.state)
-    updateTodoLeanCloud(todo, (objId) => {
+    console.log(' ddd ' + JSON.stringify(todo))
+    deletedTodoLeanCloud(todo, (objId) => {
+      console.log('-- 5 : backDeletTodo = ' + JSON.stringify(objId))
       this.setState(this.state)
     })
   }
@@ -88,21 +90,19 @@ class App extends Component {
     })
   }
   addTodo(e) {
-    // console.log('have exist : ' + JSON.stringify(this.state.todoList))
-    var newTodoData = {
+    let newTodoData = {
       id: '',
       title: e.target.value,
       status: '0',
       deleted: '0'
     }
 
-    if(e.target.value.length < 1) {
+    if (e.target.value.length < 1) {
       alert('不能创建空的任务')
       return
     }
     saveTodoTaskLeanCloud(newTodoData, (objId) => {
       newTodoData.id = objId
-
       console.log('-- 5 : backNewTodo = ' + JSON.stringify(objId))
       this.state.todoList.push(newTodoData)
       this.setState({
@@ -119,7 +119,6 @@ class App extends Component {
 
   fetchAndRefresh() {
     loadTodoData((tasks) => {
-      console.log(' ~~ success ~~ ')
       let stateCopy = this.parseJson(this.state)
       stateCopy.todoList = this.parseJson(tasks)
       this.setState(stateCopy)

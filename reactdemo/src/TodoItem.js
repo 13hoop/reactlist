@@ -13,8 +13,8 @@ export default class TodoItem extends Component {
         this.state = {hover: false}
     }
     render() {
-        var ccc = randomColored()
-        var linkStyle;
+        let ccc = randomColored()
+        let linkStyle;
         if (this.state.hover) {
             linkStyle = {backgroundColor: ccc, color: 'white'}
         } else {
@@ -30,11 +30,10 @@ export default class TodoItem extends Component {
         )
     }
     toggleHover(e) {
-        // console.log('~~ hovered: ' + this.state.hover)
         this.setState({hover: !this.state.hover})
     }
     delete(e) {
-        this.props.onDelete(e, this.props.todo)
+        this.props.onDelete.call(null, this.props.todo)
     }
     toggle(e) {
         this.props.onToggle.call(null, this.props.todo)
