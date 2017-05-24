@@ -23,7 +23,6 @@ class App extends Component {
     }
   }
   render() {
-    console.log(' - lc: ' + 'render ~ ' + JSON.stringify(this.state.todoList))
     let todos = this.state.todoList.filter((item) => item.deleted === '0').map((item, index) => {
       return (
         <li key={index}>

@@ -108,7 +108,6 @@ function creatOrUpdateTask(taskData, dependentId, targerObj, success) {
   targerObj.set('deleted', taskData.deleted)
   targerObj.set('testID', taskData.id)
   targerObj.save().then(function (data) {
-    // 这里的取值只能用`.id`，即便实际上你是拿到了完整的data的， fuck
     console.log('-- 4 synTask : ' + JSON.stringify(data.id))
     success(data.id)
   }, function (errorInfo) {
@@ -136,7 +135,12 @@ export function updateTodoLeanCloud(data, success) {
 export function deletedTodoLeanCloud(data, success) {
   let user = currentUser()
   let userObjID = user.objectId
+
   console.log(` -- 2 - delete ---> ${data.id}`)
+  if(!data.id) {
+    alert('操作失败，请重试')
+    return 
+  }
 
   let todo = AV.Object.createWithoutData('Task', data.id)
   creatOrUpdateTask(data, userObjID, todo, success)
