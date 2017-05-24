@@ -7,7 +7,6 @@ AV.init({
   appKey: APP_KEY
 });
 
-
 function parseUserFromAVUser(data) {
   return JSON.parse(JSON.stringify(data))
 }
@@ -15,8 +14,8 @@ function parseUserFromAVUser(data) {
 export default AV
 export function signUpLeanCloud(email, name, pwd, success, fail) {
   var user = new AV.User()
-  if(email) {
-    user.setEmail('tom@leancloud.cn');
+  if (email) {
+    user.setEmail(email)
   }
   user.setUsername(name)
   user.setPassword(pwd)
@@ -56,30 +55,6 @@ export function signOutLeanCloud() {
   return undefined;
 }
 
-/*
- -model-
- {
-  id:  
-  title: 
-  status:  '0' ~> 正在进行; '1' ~> 已完成，归档;
-  deleted: '0' ~> 未删除； '1' ~> 删除；
- }
-*/
-function creatOrUpdateTask(taskData, dependentId, targerObj, success) {
-  targerObj.set('dependent', dependentId)
-  targerObj.set('title', taskData.title)
-  targerObj.set('status', taskData.status)
-  targerObj.set('deleted', taskData.deleted)
-  targerObj.set('testID', taskData.id)
-  targerObj.save().then(function (data) {
-    // console.log('synTask : ' + data)
-    success(data)
-    console.log(' -- doooooonnnneee ---')
-  }, function (errorInfo) {
-    showErrorInfo(errorInfo)
-  })
-}
-
 function showErrorInfo(errorInfo) {
   console.log('error: ' + errorInfo.error)
   switch (errorInfo.code) {
@@ -93,7 +68,7 @@ function showErrorInfo(errorInfo) {
       alert('请求超时')
       break
 
-// 登陆注册相关
+    // 登陆注册相关
     case 201:
       alert('没有提供密码，或者密码为空')
       break
@@ -118,22 +93,44 @@ function showErrorInfo(errorInfo) {
   }
 }
 
-
-export function saveTodoTaskLeanCloud(data, success) {
+/*
+ -model-
+ {
+  id:  
+  title: 
+  status:  '0' ~> 正在进行; '1' ~> 已完成，归档;
+  deleted: '0' ~> 未删除； '1' ~> 删除；
+ }
+*/
+function creatOrUpdateTask(taskData, dependentId, targerObj, success) {
+  console.log('-- 3')
+  targerObj.set('dependent', dependentId)
+  targerObj.set('title', taskData.title)
+  targerObj.set('status', taskData.status)
+  targerObj.set('deleted', taskData.deleted)
+  targerObj.set('testID', taskData.id)
+  targerObj.save().then(function (data) {
+    // 这里的取值只能用`.id`，即便实际上你是拿到了完整的data的， fuck
+    console.log('-- 4 synTask : ' + JSON.stringify(data.id))
+    success(data.id)
+  }, function (errorInfo) {
+    showErrorInfo(errorInfo)
+  })
+}
+export function saveTodoTaskLeanCloud(data, success, fall ){
   let user = currentUser()
   var userObjID = user.objectId
-  console.log(` --- saveTodoTask ---> ${JSON.stringify(data)}`)
-  var todo = AV.Object('Task')
+  let Task = AV.Object.extend('Task') 
+  let todo = new Task()
   creatOrUpdateTask(data, userObjID, todo, success)
-  return undefined
 }
 
 export function updateTodoLeanCloud(data, success) {
   let user = currentUser()
   var userObjID = user.objectId
-  console.log(` --- updateTask ---> ${data}`)
+  console.log(` -- 2 - update Task ---> ${JSON.stringify(data.id)}`)
   // 有ID - 对原对象更新
-  var todo = AV.Object.createWithoutData('Task', data.objectId)
+  var todo = AV.Object.createWithoutData('Task', data.id)
   creatOrUpdateTask(data, userObjID, todo, success)
   return undefined
 }
@@ -142,11 +139,19 @@ export function loadTodoData(success) {
   var query = new AV.Query('Task')
   let user = currentUser()
   var userObjID = user.objectId
-  // console.log(' --- loadTodoData ---> ' + userObjID)
+  console.log(' --- loadTodoData ---> ' + userObjID)
   query.equalTo('dependent', userObjID)
   query.find().then(function (tasks) {
     success(tasks)
   }).catch(function (error) {
     alert(JSON.stringify(error));
   });
+}
+
+export function sendPasswordResetEmail(email, successFn, errorFn) {
+  AV.User.requestPasswordReset(email).then(function (success) {
+    successFn.call()
+  }, function (error) {
+    errorFn.call(null, error)
+  })
 }

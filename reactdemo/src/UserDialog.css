@@ -22,6 +22,35 @@
     box-shadow: 0 3rem 6rem -2rem rgba(0,0,0,.87);
 }
 
+.dialog_wrapper .forgetPwd {
+    background: linear-gradient(to right bottom, #405e6f, #394c61, #243041); 
+    min-width: 400px;
+    height: 500px;
+    padding: 48px 40px 36px;
+    box-sizing: border-box;
+    box-shadow: 0 3rem 6rem -2rem rgba(0,0,0,.87);
+}
+
+.dialog_wrapper .forgetPwd > button {
+    margin: 5px;
+    color: wheat;
+    border-width: 0px;
+    background: transparent;
+}
+
+.dialog_wrapper .forgetPwd form button {
+    display: block;
+    margin: 5px;
+    background: transparent;
+    color: #53c5b9;
+    border-width: 0px;
+}
+
+
+
+
+
+/* ----- dialog -----*/
 .dialog_wrapper .dialog nav {
     display: flex;
     align-items: baseline;
@@ -52,25 +81,25 @@
     display: none;
 }
 
-.dialog .panes .cell {
+.panes .cell {
     margin: 35px 0px 0px 0px;
 }
 
-.dialog .panes .emailCell {
+.panes .emailCell {
     margin-top: 20px;
 }
 
-.dialog .panes form .cell:last-child {
+.panes form .cell:last-child {
     margin-top: 80px;
 }
 
-.dialog .panes .cell label {
+.panes .cell label {
     display: block;
     margin: 5px;
     color: #acb3bc;
 }
 
-.dialog .panes input[type=text] {
+.panes input[type=text] {
     background-color: transparent;
     border-color: #727374;
     border-width: 0px 0px 1px 0px;
@@ -82,22 +111,23 @@
     width: 100%;
 }
 
-.dialog .panes input[type=text]:focus {
+.panes input[type=text]:focus {
     border-color: transparent;
     border-bottom: 1px solid #53c5b9;
     outline: 0px auto transparent;
     color: #53c5b9;
 }
 
-.dialog .panes input[type=text]::-webkit-input-placeholder {
-    font-size: 10px;
+.panes input[type=text]::-webkit-input-placeholder {
+    font-size: 11px;
 }
 
-.dialog .panes .action {
+.panes .action {
     display: flex;
     justify-content: flex-end; 
 }
-.dialog .panes .action button {
+
+.panes .action button {
     margin: 0px 10px;
     font-size: 20px;
     background: transparent;

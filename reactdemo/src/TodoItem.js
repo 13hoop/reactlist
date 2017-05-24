@@ -37,7 +37,6 @@ export default class TodoItem extends Component {
         this.props.onDelete(e, this.props.todo)
     }
     toggle(e) {
-        console.log('- 1 -:' + this.props.todo)
-        this.props.onToggle(e, this.props.todo, 'xxx')
+        this.props.onToggle.call(null, this.props.todo)
     }
 }
